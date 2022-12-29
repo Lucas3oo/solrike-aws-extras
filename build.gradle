@@ -1,0 +1,158 @@
+plugins {
+  id 'java-library'
+  id 'maven-publish'
+  //id 'signing'
+  id 'se.solrike.conventions.java-conventions' version '1.0.0-beta.2'
+}
+
+
+group = 'se.solrike.aws-rds-iam-datasource-factory'
+version = '0.0.1-beta.1'
+
+
+java {
+  withSourcesJar()
+  withJavadocJar()
+}
+
+artifacts {
+  archives javadocJar, sourcesJar
+}
+//signing {
+//  sign configurations.archives
+//}
+
+//gradleLint.rules = ['unused-dependency']
+
+
+
+dependencies {
+  api 'com.zaxxer:HikariCP:5.0.1'
+  api 'software.amazon.awssdk:rds:2.18.24'
+  implementation 'org.slf4j:slf4j-api:1.7.30'
+  testImplementation 'io.micronaut.sql:micronaut-jdbc-hikari:4.7.2'
+  testImplementation 'org.assertj:assertj-core:3.22.0'
+  testImplementation 'org.awaitility:awaitility:4.2.0'
+  testImplementation 'org.junit.jupiter:junit-jupiter'
+  testImplementation 'org.mockito:mockito-core:3.7.7'
+  testImplementation 'org.mockito:mockito-junit-jupiter:3.7.7'
+  testImplementation 'org.springframework.boot:spring-boot-autoconfigure:2.6.8'
+  testImplementation 'org.springframework.boot:spring-boot:2.6.8'
+  testImplementation 'org.springframework:spring-context:5.3.20'
+  testImplementation(platform('org.junit:junit-bom:5.9.1'))
+  testRuntimeOnly 'com.mysql:mysql-connector-j:8.0.31'
+
+}
+
+
+
+// to publish run "./gradlew clean build publish"
+publishing {
+  repositories {
+    maven {
+      // change to point to your repo, e.g. http://my.org/repo
+      url = "$buildDir/repo"
+    }
+    //    maven {
+    //      name = "GitHubPackages"
+    //      url = uri("https://maven.pkg.github.com/lucas3oo/spring-aws-extras")
+    //      credentials {
+    //        username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+    //        password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
+    //      }
+    //    }
+  }
+  publications {
+    gpr(MavenPublication) {
+      artifactId = project.name
+      from components.java
+      versionMapping {
+        usage('java-api') {
+          fromResolutionOf('runtimeClasspath')
+        }
+        usage('java-runtime') {
+          fromResolutionResult()
+        }
+      }
+      pom {
+        name = project.name
+        description =
+          'Java SQL Datasource factory which enables IMA authentication with AWS RDS like MySQL on any Hikari datasource'
+        url = "https://github.com/Lucas3oo/$project.name"
+        licenses {
+          license {
+            name = 'MIT License'
+            url = "https://github.com/Lucas3oo/$project.name/blob/main/LICENSE"
+          }
+        }
+        developers {
+          developer {
+            id = 'Lucas3oo'
+            name = 'Lucas Persson'
+            email = 'Lucas3oo@users.noreply.github.com'
+            organization = 'Lucas Persson'
+            organizationUrl = 'https://github.com/Lucas3oo'
+          }
+        }
+        scm {
+          connection = "scm:git:https://github.com/Lucas3oo/${project.name}.git"
+          developerConnection = "scm:git:git@github.com:Lucas3oo/${project.name}.git"
+          url = "https://github.com/Lucas3oo/${project.name}"
+        }
+      }
+    }
+  }
+}
+
+// https://central.sonatype.org/pages/ossrh-guide.html#deployment
+// https://central.sonatype.org/pages/gradle.html
+//uploadArchives {
+//  repositories {
+//    mavenDeployer {
+//      beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+//
+//      repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+//        authentication(userName: ossrhUsername, password: ossrhPassword)
+//      }
+//
+//      snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+//        authentication(userName: ossrhUsername, password: ossrhPassword)
+//      }
+//
+//      pom.project {
+//        name project.name
+//        packaging 'jar'
+//        // optionally artifactId can be defined here
+//        description 'Util classes to glue Spring and AWS together.'
+//        url "https://github.com/Lucas3oo/${project.name}"
+//
+//        licenses {
+//          license {
+//            name 'MIT License'
+//            url "https://github.com/Lucas3oo/${project.name}/blob/main/LICENSE"
+//          }
+//        }
+//        developers {
+//          developer {
+//            id 'Lucas3oo'
+//            name 'Lucas Persson'
+//            email 'Lucas3oo@users.noreply.github.com'
+//            organization 'Lucas Persson'
+//            organizationUrl 'https://github.com/Lucas3oo'
+//          }
+//        }
+//        scm {
+//          connection "scm:git:https://github.com/Lucas3oo/${project.name}.git"
+//          developerConnection "scm:git:git@github.com:Lucas3oo/${project.name}.git"
+//          url "https://github.com/Lucas3oo/${project.name}"
+//        }
+//      }
+//    }
+//  }
+//}
+
+
+// to upgrade the metainfo about which gradle version we shall use. Run ./gradlew wrapper after you have updated the version. The commit the new wrapper files except the gradlew.bat
+wrapper {
+  gradleVersion = '7.5'
+}
