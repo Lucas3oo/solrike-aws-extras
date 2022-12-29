@@ -6,6 +6,12 @@ plugins {
 }
 
 // solrike-aws-rds-iam-datasource-factory
+// solrike-aws-iam-datasource-factory
+// solrike-aws-datasource-factory
+// package 'se.solrike.aws.datasourcefactory'
+
+// GAV se.solrike.aws:solrike-aws-datasource-factory:1.0.0
+
 group = 'se.solrike.aws'
 version = '0.0.1-beta.1'
 
