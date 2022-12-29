@@ -1,4 +1,53 @@
 # aws-rds-iam-datasource-factory
 Java SQL Datasource factory which enables IAM authentication with AWS RDS like MySQL on any Hikari datasource.
 
-In the test catalog there are som sample on how to use it for Spring and Micronaut.
+In the src/test folder there are some samples on how to use it for
+[Spring](./src/test/java/se/solrike/awsrdsiamdatasourcefactory/sample/RdsIamDatasourceFactoryForSpring.java) and [Micronaut](./src/test/java/se/solrike/awsrdsiamdatasourcefactory/sample/RdsIamDatasourceFactoryForMicronaut.java).
+
+
+This library isn't dependent on Spring or Micronaut but the tests in it are. It only depends on Hikari and AWS RDS libs.
+
+
+# Usage
+
+## Create AWS RDS
+Make sure to enable IAM authentication.
+
+## Create the DB and the user that shall be used by the application
+
+    CREATE DATABASE database1;
+
+    CREATE USER myAppDbUser IDENTIFIED WITH AWSAuthenticationPlugin AS 'RDS';
+    GRANT CREATE, DELETE, INSERT, SELECT, UPDATE, SHOW VIEW ON database1.* TO myAppDbUser;
+
+
+## Create an IAM role
+The role that the application that connects to the DB must have permission to connect to the DB with IAM
+authentication.
+
+Typical permission for the role:
+
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": "rds-db:connect",
+            "Resource": "arn:aws:rds-db:eu-north-1:112233428224:dbuser:db-JF2MKOSKOSNFKOSIKQKOS7EXX4/myAppDbUser"
+        }
+    ]
+}
+```
+
+In above sample the db-JF2MKOSKOSNFKOSIKQKOS7EXX4 is the resource ID of the DB.
+
+
+## Configure your Java app
+Configure the database connection as usual but now you don't have to specify any password.
+And the process must run with the role that has the correct permission. Either using access key/secret key or
+using "instance profiles" (i.e. assign a role to the EC2 or ECS task).
+
+
