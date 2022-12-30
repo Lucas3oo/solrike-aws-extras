@@ -5,15 +5,8 @@ plugins {
   id 'se.solrike.conventions.java-conventions' version '1.0.0-beta.2'
 }
 
-// solrike-aws-rds-iam-datasource-factory
-// solrike-aws-iam-datasource-factory
-// solrike-aws-datasource-factory
-// package 'se.solrike.aws.datasourcefactory'
-
-// GAV se.solrike.aws:solrike-aws-datasource-factory:1.0.0
-
 group = 'se.solrike.aws'
-version = '0.0.1-beta.1'
+version = '0.1.0'
 
 
 java {
@@ -83,7 +76,7 @@ publishing {
       pom {
         name = project.name
         description =
-          'Java SQL Datasource factory which enables IMA authentication with AWS RDS like MySQL on any Hikari datasource'
+          'Util classes to for AWS. 1) Java SQL Datasource factory which enables IAM authentication with AWS RDS like MySQL on any Hikari datasource'
         url = "https://github.com/Lucas3oo/$project.name"
         licenses {
           license {

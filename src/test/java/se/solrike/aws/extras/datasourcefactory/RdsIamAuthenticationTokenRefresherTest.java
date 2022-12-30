@@ -1,7 +1,7 @@
 /*
  * Copyright © 2022 Lucas Persson. All Rights Reserved.
  */
-package se.solrike.awsrdsiamdatasourcefactory;
+package se.solrike.aws.extras.datasourcefactory;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;

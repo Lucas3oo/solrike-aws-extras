@@ -1,7 +1,7 @@
 /*
  * Copyright © 2022 Lucas Persson. All Rights Reserved.
  */
-package se.solrike.awsrdsiamdatasourcefactory;
+package se.solrike.aws.extras.datasourcefactory;
 
 import java.net.URI;
 

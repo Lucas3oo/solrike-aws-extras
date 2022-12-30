@@ -1,12 +1,12 @@
 /*
  * Copyright © 2022 Lucas Persson. All Rights Reserved.
  */
-package se.solrike.awsrdsiamdatasourcefactory.sample;
+package se.solrike.aws.extras.datasourcefactory.sample;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
-import se.solrike.awsrdsiamdatasourcefactory.AbstractRdsIamDatasourceFactory;
+import se.solrike.aws.extras.datasourcefactory.AbstractRdsIamDatasourceFactory;
 import software.amazon.awssdk.services.rds.RdsUtilities;
 
 /**

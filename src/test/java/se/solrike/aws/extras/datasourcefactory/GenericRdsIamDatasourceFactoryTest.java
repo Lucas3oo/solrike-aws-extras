@@ -1,7 +1,7 @@
 /*
  * Copyright © 2022 Lucas Persson. All Rights Reserved.
  */
-package se.solrike.awsrdsiamdatasourcefactory;
+package se.solrike.aws.extras.datasourcefactory;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -18,7 +18,7 @@ import org.mockito.ArgumentMatcher;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
-import se.solrike.awsrdsiamdatasourcefactory.sample.GenericRdsIamDatasourceFactory;
+import se.solrike.aws.extras.datasourcefactory.sample.GenericRdsIamDatasourceFactory;
 import software.amazon.awssdk.services.rds.RdsUtilities;
 import software.amazon.awssdk.services.rds.model.GenerateAuthenticationTokenRequest;
 

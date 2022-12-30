@@ -1,7 +1,7 @@
 /*
  * Copyright © 2022 Lucas Persson. All Rights Reserved.
  */
-package se.solrike.awsrdsiamdatasourcefactory.sample;
+package se.solrike.aws.extras.datasourcefactory.sample;
 
 import javax.annotation.PreDestroy;
 import javax.sql.DataSource;
@@ -15,7 +15,7 @@ import io.micronaut.context.annotation.Context;
 import io.micronaut.context.annotation.EachBean;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.context.annotation.Replaces;
-import se.solrike.awsrdsiamdatasourcefactory.AbstractRdsIamDatasourceFactory;
+import se.solrike.aws.extras.datasourcefactory.AbstractRdsIamDatasourceFactory;
 import software.amazon.awssdk.services.rds.RdsClient;
 
 /**
