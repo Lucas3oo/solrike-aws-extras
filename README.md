@@ -19,10 +19,12 @@ This library isn't dependent on Spring or Micronaut but the tests in it are. It 
 
 2) Create the DB and the user that shall be used by the application
 
-    CREATE DATABASE database1;
+```sql
+CREATE DATABASE database1;
 
-    CREATE USER myAppDbUser IDENTIFIED WITH AWSAuthenticationPlugin AS 'RDS';
-    GRANT CREATE, DELETE, INSERT, SELECT, UPDATE, SHOW VIEW ON database1.* TO myAppDbUser;
+CREATE USER myAppDbUser IDENTIFIED WITH AWSAuthenticationPlugin AS 'RDS';
+GRANT CREATE, DELETE, INSERT, SELECT, UPDATE, SHOW VIEW ON database1.* TO myAppDbUser;
+```
 
 3) Create an IAM role
 The role that the application that connects to the DB must have permission to connect to the DB with IAM
@@ -56,7 +58,9 @@ using ["instance profiles"](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_
 5) Override the default datasource factory. The two samples are ready to go. Just copy any to your code base.
 The GAV for the library is:
 
-    implementation 'se.solrike.aws:solrike-aws-extras:0.1.0'
+```gradle
+implementation 'se.solrike.aws:solrike-aws-extras:0.1.0'
+```
 
 
 
