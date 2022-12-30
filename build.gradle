@@ -1,29 +1,12 @@
 plugins {
   id 'java-library'
   id 'maven-publish'
-  //id 'signing'
+  id 'signing'
   id 'se.solrike.conventions.java-conventions' version '1.0.0-beta.2'
 }
 
 group = 'se.solrike.aws'
 version = '0.1.0'
-
-
-java {
-  withSourcesJar()
-  withJavadocJar()
-}
-
-artifacts {
-  archives javadocJar, sourcesJar
-}
-//signing {
-//  sign configurations.archives
-//}
-
-//gradleLint.rules = ['unused-dependency']
-
-
 
 dependencies {
   api 'com.zaxxer:HikariCP:5.0.1'
@@ -40,49 +23,58 @@ dependencies {
   testImplementation 'org.springframework:spring-context:5.3.20'
   testImplementation(platform('org.junit:junit-bom:5.9.1'))
   testRuntimeOnly 'com.mysql:mysql-connector-j:8.0.31'
-
 }
 
+def displayName = 'Solrike AWS Extras - Util classes for AWS'
+def displayDescription = 'Util classes for AWS. 1) Java SQL Datasource factory which enables IAM authentication with AWS RDS like MySQL on any Hikari datasource'
 
 
-// to publish run "./gradlew clean build publish"
+// to deploy to Maven repo: https://dev.to/kengotoda/deploying-to-ossrh-with-gradle-in-2020-1lhi
+
+java {
+  withSourcesJar()
+  withJavadocJar()
+}
+
+ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
+
+
+// To test when version has SNAPSHOT use ./gradlew publishToMavenLocal
+// To publish use ./gradlew publish
+// Don't forget to visit https://s01.oss.sonatype.org to close and release your staging repository.
+// next time use: https://github.com/gradle-nexus/publish-plugin/
+
 publishing {
   repositories {
     maven {
-      // change to point to your repo, e.g. http://my.org/repo
-      url = "$buildDir/repo"
-    }
-    //    maven {
-    //      name = "GitHubPackages"
-    //      url = uri("https://maven.pkg.github.com/lucas3oo/spring-aws-extras")
-    //      credentials {
-    //        username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
-    //        password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
-    //      }
-    //    }
-  }
-  publications {
-    gpr(MavenPublication) {
-      artifactId = project.name
-      from components.java
-      versionMapping {
-        usage('java-api') {
-          fromResolutionOf('runtimeClasspath')
-        }
-        usage('java-runtime') {
-          fromResolutionResult()
-        }
+      def releaseRepo = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+      def snapshotRepo = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+      url = isReleaseVersion ? releaseRepo : snapshotRepo
+      credentials {
+        username = project.hasProperty('ossrhUsername') ? ossrhUsername : "Unknown user"
+        password = project.hasProperty('ossrhPassword') ? ossrhPassword : "Unknown password"
       }
+    }
+  }
+
+  publications {
+    myJavaLib(MavenPublication) {
       pom {
-        name = project.name
-        description =
-          'Util classes to for AWS. 1) Java SQL Datasource factory which enables IAM authentication with AWS RDS like MySQL on any Hikari datasource'
+        groupId = project.group
+        name = displayName
+        description = displayDescription
         url = "https://github.com/Lucas3oo/$project.name"
+        from components.java
         licenses {
           license {
             name = 'MIT License'
             url = "https://github.com/Lucas3oo/$project.name/blob/main/LICENSE"
           }
+        }
+        scm {
+          connection = "scm:git:https://github.com/Lucas3oo/${project.name}.git"
+          developerConnection = "scm:git:git@github.com:Lucas3oo/${project.name}.git"
+          url = "https://github.com/Lucas3oo/${project.name}.git"
         }
         developers {
           developer {
@@ -93,62 +85,18 @@ publishing {
             organizationUrl = 'https://github.com/Lucas3oo'
           }
         }
-        scm {
-          connection = "scm:git:https://github.com/Lucas3oo/${project.name}.git"
-          developerConnection = "scm:git:git@github.com:Lucas3oo/${project.name}.git"
-          url = "https://github.com/Lucas3oo/${project.name}"
-        }
       }
     }
   }
 }
 
-// https://central.sonatype.org/pages/ossrh-guide.html#deployment
-// https://central.sonatype.org/pages/gradle.html
-//uploadArchives {
-//  repositories {
-//    mavenDeployer {
-//      beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-//
-//      repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-//        authentication(userName: ossrhUsername, password: ossrhPassword)
-//      }
-//
-//      snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-//        authentication(userName: ossrhUsername, password: ossrhPassword)
-//      }
-//
-//      pom.project {
-//        name project.name
-//        packaging 'jar'
-//        // optionally artifactId can be defined here
-//        description 'Util classes to glue Spring and AWS together.'
-//        url "https://github.com/Lucas3oo/${project.name}"
-//
-//        licenses {
-//          license {
-//            name 'MIT License'
-//            url "https://github.com/Lucas3oo/${project.name}/blob/main/LICENSE"
-//          }
-//        }
-//        developers {
-//          developer {
-//            id 'Lucas3oo'
-//            name 'Lucas Persson'
-//            email 'Lucas3oo@users.noreply.github.com'
-//            organization 'Lucas Persson'
-//            organizationUrl 'https://github.com/Lucas3oo'
-//          }
-//        }
-//        scm {
-//          connection "scm:git:https://github.com/Lucas3oo/${project.name}.git"
-//          developerConnection "scm:git:git@github.com:Lucas3oo/${project.name}.git"
-//          url "https://github.com/Lucas3oo/${project.name}"
-//        }
-//      }
-//    }
-//  }
-//}
+signing {
+  sign publishing.publications.myJavaLib
+}
+tasks.withType(Sign) {
+  onlyIf { isReleaseVersion }
+}
+
 
 
 // to upgrade the metainfo about which gradle version we shall use. Run ./gradlew wrapper after you have updated the version. The commit the new wrapper files except the gradlew.bat
