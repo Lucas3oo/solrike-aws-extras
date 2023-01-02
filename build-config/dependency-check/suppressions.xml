@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.3.xsd">
+  <suppress>
+    <notes>
+      <![CDATA[
+      file name: commons-codec-1.11.jar
+      Supressed since the CVE is for Apacha commons net and not commons-codec.
+      ]]>
+    </notes>
+    <packageUrl regex="true">^pkg:maven/commons\-codec/commons\-codec@.*$</packageUrl>
+    <cve>CVE-2021-37533</cve>
+  </suppress>
+
+  <suppress>
+    <notes>
+      <![CDATA[
+      file name: commons-logging-1.2.jar
+      Supressed since the CVE is for Apacha commons net and not commons-codec.
+      ]]>
+    </notes>
+    <packageUrl regex="true">^pkg:maven/commons\-logging/commons\-logging@.*$</packageUrl>
+    <cve>CVE-2021-37533</cve>
+  </suppress>
+
+</suppressions>

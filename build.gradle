@@ -6,12 +6,12 @@ plugins {
 }
 
 group = 'se.solrike.aws'
-version = '0.2.0-SNAPSHOT'
+version = '0.2.0'
 
 dependencies {
   api 'com.zaxxer:HikariCP:5.0.1'
-  api 'software.amazon.awssdk:rds:2.18.24'
-  implementation 'org.slf4j:slf4j-api:1.7.30'
+  api 'software.amazon.awssdk:rds:2.19.8'
+  implementation 'org.slf4j:slf4j-api:1.7.36'
   testImplementation 'io.micronaut.sql:micronaut-jdbc-hikari:4.7.2'
   testImplementation 'org.assertj:assertj-core:3.22.0'
   testImplementation 'org.awaitility:awaitility:4.2.0'
@@ -23,10 +23,22 @@ dependencies {
   testImplementation 'org.springframework:spring-context:5.3.20'
   testImplementation(platform('org.junit:junit-bom:5.9.1'))
   testRuntimeOnly 'com.mysql:mysql-connector-j:8.0.31'
+
+  constraints {
+    api('commons-codec:commons-codec:1.15') {
+      because 'Used by AWS SDK via Apache httpclient. Previous versions have a security bugs ([sonatype-2012-0050] CWE-20)'
+    }
+  }
 }
 
+dependencyCheck {
+  suppressionFile = rootProject.file('build-config/dependency-check/suppressions.xml')
+}
+
+
 def displayName = 'Solrike AWS Extras - Util classes for AWS'
-def displayDescription = 'Util classes for AWS. 1) Java SQL Datasource factory which enables IAM authentication with AWS RDS like MySQL on any Hikari datasource'
+def displayDescription =
+  'Util classes for AWS. 1) Java SQL Datasource factory which enables IAM authentication with AWS RDS like MySQL on any Hikari datasource'
 
 
 // to deploy to Maven repo: https://dev.to/kengotoda/deploying-to-ossrh-with-gradle-in-2020-1lhi
@@ -36,7 +48,7 @@ java {
   withJavadocJar()
 }
 
-ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
+ext.isReleaseVersion = !version.endsWith('SNAPSHOT')
 
 
 // To test when version has SNAPSHOT use ./gradlew publishToMavenLocal
@@ -47,18 +59,18 @@ ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
 publishing {
   repositories {
     maven {
-      def releaseRepo = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
-      def snapshotRepo = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+      def releaseRepo = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
+      def snapshotRepo = 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
       url = isReleaseVersion ? releaseRepo : snapshotRepo
       credentials {
-        username = project.hasProperty('ossrhUsername') ? ossrhUsername : "Unknown user"
-        password = project.hasProperty('ossrhPassword') ? ossrhPassword : "Unknown password"
+        username = project.hasProperty('ossrhUsername') ? ossrhUsername : 'Unknown user'
+        password = project.hasProperty('ossrhPassword') ? ossrhPassword : 'Unknown password'
       }
     }
   }
 
   publications {
-    myJavaLib(MavenPublication) {
+    javaLib(MavenPublication) {
       pom {
         groupId = project.group
         name = displayName
@@ -91,7 +103,7 @@ publishing {
 }
 
 signing {
-  sign publishing.publications.myJavaLib
+  sign publishing.publications.javaLib
 }
 tasks.withType(Sign) {
   onlyIf { isReleaseVersion }

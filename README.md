@@ -55,10 +55,13 @@ using ["instance profiles"](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_
 The GAV for the library is:
 
 ```gradle
-implementation 'se.solrike.aws:solrike-aws-extras:0.1.0'
+implementation 'se.solrike.aws:solrike-aws-extras:0.2.0'
 ```
 
 # Release Notes
+## 0.2.0
+Bump version on AWS SDK to avoid security issues in Netty 4.1.77
+
 ## 0.1.0
 Supports datasource factory that creates IAM authentication enabled Hikari datasources
 

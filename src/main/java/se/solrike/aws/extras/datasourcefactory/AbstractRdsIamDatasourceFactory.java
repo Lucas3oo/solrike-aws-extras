@@ -20,13 +20,17 @@ public abstract class AbstractRdsIamDatasourceFactory<C> {
    * Create the datasource and but first reconfigure it to support IAM DB authentication and enable password/token
    * refresh using Hikari's MXBean.
    *
+   * @param rdsUtilities
+   *          - AWS SDK utilities class. Get it from RdsClient.create().utilities()
    * @param jdbcUrl
    *          - e.g. jdbc:mysql://database1.crux4711.eu-north-1.rds.amazonaws.com:3306/database1. The hostname must be
    *          know to AWS RDS so it can't be from a private DNS. The URL must also have a port defined.
    * @param dbUsername
+   *          - database username for the application
    * @param refreshIntervalInMinutes
    *          - auth token refresh interval. Token only valid for 15 min so it must be refreshed like every 14 min.
    * @param datasourceConfiguration
+   *          - datasource configuration properties.
    * @return a datasource
    */
   protected HikariDataSource createDatasource(RdsUtilities rdsUtilities, String jdbcUrl, String dbUsername,
@@ -52,6 +56,7 @@ public abstract class AbstractRdsIamDatasourceFactory<C> {
    * Actually create the datasource using the platform (e.g. Spring/Micronaut etc) specific factory.
    *
    * @param datasourceConfiguration
+   *          - datasource configuration properties.
    * @return datasource
    */
   protected abstract HikariDataSource doCreateDatasource(C datasourceConfiguration);
@@ -60,7 +65,9 @@ public abstract class AbstractRdsIamDatasourceFactory<C> {
    * Update the password on the configuration.
    *
    * @param passoword
+   *          - database password which will be a generated authentication token.
    * @param datasourceConfiguration
+   *          - datasource configuration properties.
    */
   protected abstract void setPassword(String passoword, C datasourceConfiguration);
 
