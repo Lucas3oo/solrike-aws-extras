@@ -20,6 +20,8 @@ import software.amazon.awssdk.services.rds.RdsClient;
 
 /**
  * Datasource factory that supports IAM DB authentication when using Hikari connection pool.
+ *
+ * This class overrides the default Hikari datasource factory.
  */
 @Configuration
 public class RdsIamDatasourceFactoryForSpring extends AbstractRdsIamDatasourceFactory<DataSourceProperties> {
@@ -44,7 +46,7 @@ public class RdsIamDatasourceFactoryForSpring extends AbstractRdsIamDatasourceFa
    * <p>
    *
    * <pre class="code">
-   * <code class="yaml">
+   * <code>
    * spring.datasource.url: jdbc:mysql://database1.crux4711.eu-north-1.rds.amazonaws.com:3306/database1
    * spring.datasource.username: myAppDbUser
    * spring.datasource.password:
@@ -87,8 +89,8 @@ public class RdsIamDatasourceFactoryForSpring extends AbstractRdsIamDatasourceFa
   }
 
   @Override
-  protected void setPassword(String passowrd, DataSourceProperties datasourceConfiguration) {
-    datasourceConfiguration.setPassword(passowrd);
+  protected void setPassword(String password, DataSourceProperties datasourceConfiguration) {
+    datasourceConfiguration.setPassword(password);
   }
 
 }

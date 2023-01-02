@@ -20,6 +20,8 @@ import software.amazon.awssdk.services.rds.RdsClient;
 
 /**
  * Datasource factory that supports IAM DB authentication when using Hikari connection pool.
+ *
+ * This class overrides the default Hikari datasource factory.
  */
 @Factory
 @Replaces(factory = DatasourceFactory.class)
@@ -78,8 +80,8 @@ public class RdsIamDatasourceFactoryForMicronaut extends AbstractRdsIamDatasourc
   }
 
   @Override
-  protected void setPassword(String passowrd, DatasourceConfiguration datasourceConfiguration) {
-    datasourceConfiguration.setPassword(passowrd);
+  protected void setPassword(String password, DatasourceConfiguration datasourceConfiguration) {
+    datasourceConfiguration.setPassword(password);
   }
 
   @Override

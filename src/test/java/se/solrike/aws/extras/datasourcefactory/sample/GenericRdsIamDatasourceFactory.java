@@ -37,8 +37,8 @@ public class GenericRdsIamDatasourceFactory extends AbstractRdsIamDatasourceFact
   }
 
   @Override
-  protected void setPassword(String passoword, HikariConfig datasourceConfiguration) {
-    datasourceConfiguration.setPassword(passoword);
+  protected void setPassword(String password, HikariConfig datasourceConfiguration) {
+    datasourceConfiguration.setPassword(password);
   }
 
 }

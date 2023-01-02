@@ -64,12 +64,12 @@ public abstract class AbstractRdsIamDatasourceFactory<C> {
   /**
    * Update the password on the configuration.
    *
-   * @param passoword
+   * @param password
    *          - database password which will be a generated authentication token.
    * @param datasourceConfiguration
    *          - datasource configuration properties.
    */
-  protected abstract void setPassword(String passoword, C datasourceConfiguration);
+  protected abstract void setPassword(String password, C datasourceConfiguration);
 
   private URI getUriFromJdbcUrl(String url) {
     // peal off 'jdbc:' so the parser works

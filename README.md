@@ -1,14 +1,14 @@
 # solrike-aws-extras
-Util classes for AWS. Depends on AWS SDK v2.
+Utility classes for AWS. Depends on AWS SDK v2.
 
 Java SQL Datasource factory which enables IAM authentication with AWS RDS like MySQL on any [Hikari datasource](https://github.com/brettwooldridge/HikariCP). That means password-less access from the application towards the DB.
 
 In the src/test folder there are some samples on how to use the factory for
 [Spring](./src/test/java/se/solrike/aws/extras/datasourcefactory/sample/RdsIamDatasourceFactoryForSpring.java) and [Micronaut](./src/test/java/se/solrike/aws/extras/datasourcefactory/sample/RdsIamDatasourceFactoryForMicronaut.java).
 
-This library isn't dependent on Spring or Micronaut but the tests in it are. It only depends on Hikari and AWS RDS libs.
+This library isn't dependent on Spring or Micronaut but the tests in it are. It only depends on Hikari and AWS RDS libraries.
 
-The reason for the actual implementation of datasource factory is left in test folder is that for Micronaut you need the annotation processor to cruch the code so it is better that the application that uses this lib implements this factory instead. But feel free to copy the code. It is basically only the wiring you need to do.
+The reason for the actual implementation of datasource factory is left in test folder is that for Micronaut you need the annotation processor to crunch the code so it is better that the application that uses this library implements this factory instead. But feel free to copy the code. It is basically only the wiring you need to do.
 
 # Datasource factory for IAM authentication
 
@@ -47,7 +47,7 @@ Typical permission for the role:
 
 In above sample the db-JF2MKOSKOSNFKOSIKQKOS7EXX4 is the resource ID of the DB.
 
-4) Configure your Java app. Configure the database connection as usual but now you don't have to specify any password.
+4) Configure your Java application. Configure the database connection as usual but now you don't have to specify any password.
 And the process must run with the role that has the correct permission. Either using access key/secret key or
 using ["instance profiles"](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-ec2_instance-profiles.html) (i.e. assign a role to the EC2 or ECS task).
 
@@ -60,7 +60,8 @@ implementation 'se.solrike.aws:solrike-aws-extras:0.2.0'
 
 # Release Notes
 ## 0.2.0
-Bump version on AWS SDK to avoid security issues in Netty 4.1.77
+Bump version on AWS SDK to avoid security issues in Netty 4.1.77.
+
 Fix all JavaDoc warnings.
 
 ## 0.1.0
