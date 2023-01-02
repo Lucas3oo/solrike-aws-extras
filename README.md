@@ -4,7 +4,7 @@ Util classes for AWS. Depends on AWS SDK v2.
 Java SQL Datasource factory which enables IAM authentication with AWS RDS like MySQL on any [Hikari datasource](https://github.com/brettwooldridge/HikariCP). That means password-less access from the application towards the DB.
 
 In the src/test folder there are some samples on how to use the factory for
-[Spring](./src/test/java/se/solrike/awsrdsiamdatasourcefactory/sample/RdsIamDatasourceFactoryForSpring.java) and [Micronaut](./src/test/java/se/solrike/awsrdsiamdatasourcefactory/sample/RdsIamDatasourceFactoryForMicronaut.java).
+[Spring](./src/test/java/se/solrike/aws/extras/datasourcefactory/sample/RdsIamDatasourceFactoryForSpring.java) and [Micronaut](./src/test/java/se/solrike/aws/extras/datasourcefactory/sample/RdsIamDatasourceFactoryForMicronaut.java).
 
 This library isn't dependent on Spring or Micronaut but the tests in it are. It only depends on Hikari and AWS RDS libs.
 
@@ -61,6 +61,7 @@ implementation 'se.solrike.aws:solrike-aws-extras:0.2.0'
 # Release Notes
 ## 0.2.0
 Bump version on AWS SDK to avoid security issues in Netty 4.1.77
+Fix all JavaDoc warnings.
 
 ## 0.1.0
 Supports datasource factory that creates IAM authentication enabled Hikari datasources
