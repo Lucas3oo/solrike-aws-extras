@@ -2,7 +2,7 @@ plugins {
   id 'java-library'
   id 'maven-publish'
   id 'signing'
-  id 'se.solrike.conventions.java-conventions' version '1.0.0-beta.2'
+  id 'se.solrike.conventions.java-conventions' version '1.0.0-beta.4'
 }
 
 group = 'se.solrike.aws'
@@ -31,6 +31,7 @@ dependencies {
   }
 }
 
+// ./gradlew dependencyCheckAggregate
 dependencyCheck {
   suppressionFile = rootProject.file('build-config/dependency-check/suppressions.xml')
 }
@@ -109,9 +110,7 @@ tasks.withType(Sign) {
   onlyIf { isReleaseVersion }
 }
 
-
-
 // to upgrade the metainfo about which gradle version we shall use. Run ./gradlew wrapper after you have updated the version. The commit the new wrapper files except the gradlew.bat
 wrapper {
-  gradleVersion = '7.5'
+  gradleVersion = '8.1.1'
 }

@@ -1,1 +1,5 @@
+//pluginManagement {
+//  includeBuild '../solrike-conventions-gradle-plugin'
+//}
 rootProject.name = 'solrike-aws-extras'
+

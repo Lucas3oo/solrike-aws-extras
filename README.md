@@ -1,4 +1,6 @@
 # solrike-aws-extras
+![build workflow](https://github.com/Lucas3oo/solrike-aws-extras/actions/workflows/build.yaml/badge.svg)
+
 Utility classes for AWS. Depends on AWS SDK v2.
 
 Java SQL Datasource factory which enables IAM authentication with AWS RDS like MySQL on any [Hikari datasource](https://github.com/brettwooldridge/HikariCP). That means password-less access from the application towards the DB.
